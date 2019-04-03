@@ -1,0 +1,15 @@
+<form class="form-group border rounded p-4 bg-light mb-5" [formGroup]="formModel.group" autocomplete="off">
+    <img id="logo" src="assets/logo.png" alt="image" class="">
+    <h1 class="text-center font-weight-bold mb-4 m-2">
+        {{'App.Title' | translate}}
+    </h1>
+    <mat-form-field class="d-block">
+        <input matInput [placeholder]="'Login.Login_Placeholder' | translate" [formControl]="formModel.userName">
+    </mat-form-field>
+
+    <mat-form-field class="d-block mt-1">
+        <input matInput [placeholder]="'Login.Password_PlaceHolder' | translate" type="password" [formControl]="formModel.password">
+    </mat-form-field>
+
+    <button (click)="onLogin()" class="d-block mt-2 login-button" mat-raised-button color="primary">belépés</button>
+</form>

@@ -1,0 +1,21 @@
+<mat-error *ngIf="control && control.hasError('required') && control.touched">
+	{{'Validators.Required' | translate}}
+</mat-error>
+<mat-error *ngIf="control && control.hasError('pattern') && control.touched">
+	{{'Validators.Pattern' | translate}}
+</mat-error>
+<mat-error *ngIf="control && control.hasError('min') && control.touched">
+	{{'Validators.Min' | translate}}
+</mat-error>
+<mat-error *ngIf="control && control.hasError('max') && control.touched">
+	{{'Validators.Max' | translate}}
+</mat-error>
+<mat-error *ngIf="control && control.hasError('minlength') && control.touched">
+	{{'Validators.MinLength' | translate}}
+</mat-error>
+<mat-error *ngIf="control && control.hasError('maxlength') && control.touched">
+	{{'Validators.MaxLength' | translate}}
+</mat-error>
+<mat-error *ngIf="control && control.hasError('number') && control.touched">
+	{{'Validators.Number' | translate}}
+</mat-error>

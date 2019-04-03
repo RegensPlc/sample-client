@@ -1,0 +1,12 @@
+@import '../../../styles/imports.scss';
+:host {
+    display: block;
+}
+
+.document {
+    border-top: 1px solid $border-color;
+    padding: 5px 0;
+    &:last-child {
+        border-bottom: 1px solid $border-color;
+    }
+}

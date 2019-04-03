@@ -1,0 +1,33 @@
+@import "imports";
+@import "angular-dropdown";
+@import "angular";
+@import "styles-app-loading";
+@import "material-icons";
+body,
+html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+h3,
+h4 {
+    margin: 0;
+}
+
+h6 {
+    font-style: italic;
+    font-weight: normal;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+a,
+a:focus,
+a:hover {
+    color: $primary-color;
+}

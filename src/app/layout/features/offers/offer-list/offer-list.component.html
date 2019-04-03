@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col">
+        <form autocomplete="off" class="m-2">
+            <div class="row d-flex align-items-center">
+                <mat-form-field class="col-12 col-lg-1">
+                    <mat-select [placeholder]="'Offers.List.Filters.Year_Placeholder' | translate" [formControl]="formModel.year">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let year of years" [value]="year">
+                            {{year}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-12 col-lg-1">
+                    <input matInput [placeholder]="'Offers.List.Filters.Serial_Placeholder' | translate" [formControl]="formModel.serial" autocomplete="off" />
+                </mat-form-field>
+                <mat-form-field class="col">
+                    <input matInput [placeholder]="'Offers.List.Filters.PartnerName_Placeholder' | translate" [formControl]="formModel.partnerName" autocomplete="off" />
+                </mat-form-field>
+                <mat-form-field class="col-12 col-lg-auto">
+                    <mat-select [placeholder]="'Offers.List.Filters.Type_Placeholder' | translate" [formControl]="formModel.type">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let offerType of offerTypes" [value]="offerType">
+                            {{offerType.displayName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-12 col-lg-auto">
+                    <mat-select [placeholder]="'Offers.List.Filters.Status_Placeholder' | translate" [formControl]="formModel.status">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let offerState of offerStates" [value]="offerState">
+                            {{offerState.displayName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-12 col-lg-auto">
+                    <mat-select [placeholder]="'Offers.List.Filters.Result_Placeholder' | translate" [formControl]="formModel.result">
+                        <mat-option>--</mat-option>
+                        <mat-option *ngFor="let offerResult of offerResults" [value]="offerResult">
+                            {{offerResult.displayName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="col-12 col-lg-auto">
+                    <input matInput [placeholder]="'Offers.List.Filters.DateFrom_Placeholder' | translate" [formControl]="formModel.dateFrom" [matDatepicker]="dateFromPicker" [max]="formModel.dateTo.value" autocomplete="off" />
+                    <mat-datepicker-toggle matSuffix [for]="dateFromPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #dateFromPicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="col-12 col-lg-auto">
+                    <input matInput [placeholder]="'Offers.List.Filters.DateTo_Placeholder' | translate" [formControl]="formModel.dateTo" [matDatepicker]="dateToPicker" [min]="formModel.dateFrom.value" autocomplete="off" />
+                    <mat-datepicker-toggle matSuffix [for]="dateToPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #dateToPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-raised-button color="primary" ng-reflect-color="primary" (click)="onSearch()">{{'Offers.List.Filters.Search' | translate}}</button>
+                <a [routerLink]="navigationService.features().offers().offerDetailsUrl(null)" mat-raised-button class="ml-3">{{'Concepts.New' | translate}}</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <mat-table [dataSource]="dataSource" matSort class="mt-4" matSortActive="offerId" matSortDirection="desc">
+            <ng-container matColumnDef="offerId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Offers.List.Table.OfferId_Header' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let offer">{{offer.offerId}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="partnerName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Offers.List.Table.PartnerName_Header' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let offer">{{offer.partnerName}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="typeName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Offers.List.Table.Type_Header' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let offer">{{offer.typeName}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="statusName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Offers.List.Table.Status_Header' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let offer">{{offer.statusName}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="resultName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Offers.List.Table.Result_Header' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let offer">{{offer.resultName}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Offers.List.Table.Date_Header' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let offer">{{offer.date}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="endOfValidity">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Offers.List.Table.EndOfValidity_Header' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let offer">{{offer.endOfValidity}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let offer" class="d-flex">
+                    <i class="material-icons">keyboard_arrow_right</i>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columns;" class="element-row" (click)="elementClick(row)"></mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50, 100]">
+        </mat-paginator>
+    </div>
+</div>

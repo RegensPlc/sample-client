@@ -1,0 +1,6 @@
+@import '~@angular/material/theming';
+$primary-color: map-get($mat-green, 500);
+$border-color: #cccccc;
+$secondary-color: map-get($mat-yellow, 500);
+$error-color: map-get($mat-deep-orange, A200);
+$highlight-color: map-get($mat-yellow, 100);

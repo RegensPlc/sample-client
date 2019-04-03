@@ -1,0 +1,17 @@
+<section class="user-data">
+	<div class="user-name">{{user.displayName}}</div>
+	<div class="user-role">{{user.userName}}</div>
+</section>
+<button mat-icon-button [matMenuTriggerFor]="menu">
+	<mat-icon class="vert-icon">more_vert</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+	<a mat-menu-item href="http://www.regenseurope.com" target="_blank">
+		<mat-icon>help_outline</mat-icon>
+		<span>Dokumentáció</span>
+	</a>
+	<button mat-menu-item (click)="onLogout()">
+		<mat-icon>exit_to_app</mat-icon>
+		<span>Kilépés</span>
+	</button>
+</mat-menu>

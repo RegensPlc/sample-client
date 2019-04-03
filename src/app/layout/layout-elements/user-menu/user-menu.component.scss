@@ -1,0 +1,22 @@
+@import "../../../../styles/imports";
+.vert-icon {
+    color: white;
+    &:hover {
+        background-color: white;
+        border-radius: 100%;
+    }
+}
+
+.user-data {
+    line-height: 24px;
+    color: white;
+    float: left;
+}
+
+.user-name {
+    text-align: right;
+}
+
+.user-role {
+    font-size: 0.8rem;
+}

@@ -1,0 +1,29 @@
+@import "../../styles/imports.scss";
+
+$sidenav-width: 200px;
+
+.sidenav-container {
+	height: 100%;
+}
+
+.sidenav {
+	box-shadow: 3px 0 6px rgba(0, 0, 0, .24);
+	width: $sidenav-width;
+}
+
+.toolbar-spacer {
+	flex: 1 0 auto;
+}
+
+.content-container {
+	margin-top: 64px;
+	min-height: calc(100vh - 64px);
+	position: relative;
+}
+
+mat-toolbar {
+	position: fixed;
+	top: 0;
+	width: calc(100% - #{$sidenav-width});
+	z-index: 2;
+}

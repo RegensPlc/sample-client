@@ -1,0 +1,14 @@
+<nav *ngIf="breadcrumbItems && breadcrumbItems.length" id="breadcrumb">
+    <ul>
+        <li *ngFor="let item of breadcrumbItems let first = first; let last = last" [ngClass]="{ first: first, last: last }">
+            <a *ngIf="item.path" [routerLink]="item.path" class="u-no-underline">
+                <span>
+					{{item.name}}
+				</span>
+            </a>
+            <span *ngIf="!item.path">
+				{{item.name}}
+			</span>
+        </li>
+    </ul>
+</nav>

@@ -1,0 +1,29 @@
+@import "../../../../styles/imports";
+
+.notification {
+	max-width: 450px;
+	padding: 10px;
+	word-break: break-word;
+
+	&-error {
+		color: $error-color;
+	}
+
+	&-info {
+		color: lightskyblue;
+	}
+
+	&-success {
+		color: $primary-color;
+	}
+
+	&-warning {
+		color: $secondary-color;
+	}
+}
+
+.close-button {
+	color: white;
+	position: relative;
+	top: -8px;
+}

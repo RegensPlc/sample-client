@@ -1,0 +1,18 @@
+@import "./imports.scss";
+button[color='primary']:not([mat-icon-button]):not([mat-button]) {
+    color: white !important;
+}
+
+button[color='primary'][mat-raised-button] {
+    color: white !important;
+}
+
+mat-footer-row.mat-footer-row {
+    background: #ff9d9d !important;
+    font-weight: bold;
+}
+
+// necessary in order to make the open angular2 multiselect visible from an expansion panel
+.mat-expansion-panel {
+	overflow: unset !important;
+}	

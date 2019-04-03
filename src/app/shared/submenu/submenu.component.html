@@ -1,0 +1,12 @@
+<nav mat-tab-nav-bar>
+    <ng-container *ngFor="let item of items">
+        <a mat-tab-link *ngIf="item.disabled === false" [routerLink]="item.url" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive" class="u-no-underline">
+            <div class="float-left mt-2">{{item.text}}</div>
+            <mat-icon *ngIf="item.icon" [title]="item.iconTitle" class="float-right ml-2 mt-1">{{item.icon}}</mat-icon>
+        </a>
+        <span mat-tab-link *ngIf="item.disabled === true" [active]="false" class="u-no-underline">
+			<div class="float-left mt-2">{{item.text}}</div>
+            <mat-icon *ngIf="item.icon" [title]="item.iconTitle" class="float-right ml-2 mt-1">{{item.icon}}</mat-icon>
+		</span>
+    </ng-container>
+</nav>

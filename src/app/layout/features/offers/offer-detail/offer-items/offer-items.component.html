@@ -1,0 +1,188 @@
+<ng-container *ngIf="model">
+    <h4 class="mb-2">{{'Offers.Detail.Items.Title' | translate}}</h4>
+    <ccd-actions class="mt-4">
+        <button (click)="handleSave()" *ngIf="!isReadonly" [disabled]="cannotSave || operationInProgress" mat-raised-button color="primary">{{'Concepts.Save' | translate}}</button>
+        <a (click)="onNewItem()" mat-raised-button class="ml-3">{{'Concepts.New' | translate}}</a>
+    </ccd-actions>
+    <div [formGroup]="model.group" class="mt-3">
+        <div formArrayName="items">
+            <div *ngFor="let item of model.getItemGroups(); let i=index" [formGroupName]="i" class="form-group mb-0 item-row">
+                <div class="row">
+                    <div class="col">
+                        <input hidden [formControl]="item.controls['id']" autocomplete="off" />
+                        <span class="info-label">
+                            {{serialDisplayerFn(item.controls['serial'].value)}}
+                        </span>
+                        <button mat-icon-button (click)="onDeleteItem(item)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="onCopyItem(item)">
+                            <mat-icon>file_copy</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="highlighted-rows">
+                    <div class="row">
+                        <mat-form-field class="col">
+                            <mat-select required [placeholder]="'Offers.Detail.Items.TypePlaceholder' | translate" [formControl]="item.controls['type']">
+                                <mat-option *ngFor="let type of offerTypes" [value]="type">
+                                    {{type.displayName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>
+                                <ccd-validation-displayer [control]="item.controls['type']"></ccd-validation-displayer>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col small-numeric">
+                            <input type="number" matInput [placeholder]="'Offers.Detail.Items.WeightPlaceholder' | translate" [formControl]="item.controls['weight']" autocomplete="off" />
+                            <mat-error>
+                                <ccd-validation-displayer [control]="item.controls['weight']"></ccd-validation-displayer>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col small-numeric">
+                            <input type="number" matInput [placeholder]="'Offers.Detail.Items.VolumePlaceholder' | translate" [formControl]="item.controls['volume']" autocomplete="off" />
+                            <mat-error>
+                                <ccd-validation-displayer [control]="item.controls['volume']"></ccd-validation-displayer>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col">
+                            <input matInput [placeholder]="'Offers.Detail.Items.NaturaliaPlaceholder' | translate" [formControl]="item.controls['naturalia']" autocomplete="off" />
+                            <mat-error>
+                                <ccd-validation-displayer [control]="item.controls['naturalia']"></ccd-validation-displayer>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col">
+                            <input matInput [placeholder]="'Offers.Detail.Items.ProductTypePlaceholder' | translate" [formControl]="item.controls['productType']" autocomplete="off" />
+                            <mat-error>
+                                <ccd-validation-displayer [control]="item.controls['productType']"></ccd-validation-displayer>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="col-lg-3">
+                            <input matInput [placeholder]="'Offers.Detail.Items.ValuePlaceholder' | translate" [formControl]="item.controls['value']" autocomplete="off" ccdCurrencyInput="1.2-2" />
+                            <mat-error>
+                                <ccd-validation-displayer [control]="item.controls['value']"></ccd-validation-displayer>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-lg-3">
+                            <mat-select [placeholder]="'Offers.Detail.Items.CurrencyPlaceholder' | translate" [formControl]="item.controls['currency']" autocomplete="off">
+                                <mat-option *ngFor="let currency of paymentCurrencies" [value]="currency">
+                                    {{currency.displayName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>
+                                <ccd-validation-displayer [control]="item.controls['currency']"></ccd-validation-displayer>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-lg-6">
+                            <textarea matInput matTextareaAutosize matAutosizeMinRows="1" matAutosizeMaxRows="2" [placeholder]="'Offers.Detail.Items.CommentPlaceholder' | translate" [formControl]="item.controls['comment']" autocomplete="off"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col datepicker">
+                        <input matInput [placeholder]="'Offers.Detail.Items.UpDatePlaceholder' | translate" [formControl]="item.controls['upDate']" [max]="item.controls['downDate'].value" [matDatepicker]="upDatePicker" autocomplete="off" />
+                        <mat-datepicker-toggle matSuffix [for]="upDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #upDatePicker></mat-datepicker>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['upDate']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.UpCompanyPlaceholder' | translate" [formControl]="item.controls['upCompany']" autocomplete="off" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['upCompany']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.UpZipCodePlaceholder' | translate" [matAutocomplete]="upZipCode" [formControl]="item.controls['upZipCode']">
+                        <mat-autocomplete #upZipCode="matAutocomplete" [displayWith]="cityDisplayerFn" (optionSelected)="handleUpZipCodeSelect($event, item)">
+                            <mat-option *ngFor="let city of item.upCities$ | async" [value]="city">
+                                <div>{{cityDisplayerFn(city)}}</div>
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['upZipCode']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.UpCodePlaceholder' | translate" [formControl]="item.controls['upCode']" autocomplete="off" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['upCode']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.UpCityCodePlaceholder' | translate" [formControl]="item.controls['upCityCode']" autocomplete="off" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['upCityCode']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.UpAddressPlaceholder' | translate" [formControl]="item.controls['upAddress']" autocomplete="off" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['upAddress']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.UpCommentPlaceholder' | translate" [formControl]="item.controls['upComment']" autocomplete="off" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['upComment']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col datepicker">
+                        <input matInput [placeholder]="'Offers.Detail.Items.DownDatePlaceholder' | translate" [formControl]="item.controls['downDate']" [min]="item.controls['upDate'].value" [matDatepicker]="downDatePicker" autocomplete="off" />
+                        <mat-datepicker-toggle matSuffix [for]="downDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #downDatePicker></mat-datepicker>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['downDate']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.DownCompanyPlaceholder' | translate" [formControl]="item.controls['downCompany']" autocomplete="off" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['downCompany']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.DownZipCodePlaceholder' | translate" [matAutocomplete]="downZipCode" [formControl]="item.controls['downZipCode']">
+                        <mat-autocomplete #downZipCode="matAutocomplete" [displayWith]="cityDisplayerFn" (optionSelected)="handleDownZipCodeSelect($event, item)">
+                            <mat-option *ngFor="let city of item.downCities$ | async" [value]="city">
+                                <div>{{cityDisplayerFn(city)}}</div>
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['downZipCode']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.DownCodePlaceholder' | translate" [formControl]="item.controls['downCode']" autocomplete="off" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['downCode']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.DownCityCodePlaceholder' | translate" [formControl]="item.controls['downCityCode']" autocomplete="off" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['downCityCode']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.DownAddressPlaceholder' | translate" [formControl]="item.controls['downAddress']" autocomplete="off" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['downAddress']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                        <input matInput [placeholder]="'Offers.Detail.Items.DownCommentPlaceholder' | translate" [formControl]="item.controls['downComment']" autocomplete="off" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="item.controls['downComment']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

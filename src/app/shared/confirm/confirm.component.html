@@ -1,0 +1,14 @@
+<h4 mat-dialog-title>{{data.title}}</h4>
+
+<mat-dialog-content class="mb-3">{{data.message}}</mat-dialog-content>
+
+<mat-dialog-actions>
+	<div class="row">
+		<div class="col-auto">
+			<button mat-raised-button color="primary" [mat-dialog-close]="true">{{'Concepts.Ok' | translate}}</button>
+		</div>
+		<div class="col-auto">
+			<button mat-button color="primary" mat-dialog-close>{{'Concepts.Cancel' | translate}}</button>
+		</div>
+	</div>
+</mat-dialog-actions>

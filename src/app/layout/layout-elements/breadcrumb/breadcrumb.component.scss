@@ -1,0 +1,29 @@
+@import "../../../../styles/imports";
+#breadcrumb {
+    font-size: 24px;
+    ul {
+        max-width: 65vw;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        li {
+            display: inline;
+            list-style-type: none;
+            margin-left: 0;
+            color: white;
+        }
+        li:before {
+            content: "/";
+            padding-right: 3px;
+        }
+        li:first-child:before {
+            content: "";
+            padding-right: 0;
+        }
+        li a {
+            color: white;
+        }
+    }
+}

@@ -1,0 +1,18 @@
+@import "../../styles/imports";
+:host {
+    align-items: center;
+    background-color: $primary-color;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: #1a3973;
+    font-size: 18px;
+}
+
+form {
+    background-color: white !important;
+}

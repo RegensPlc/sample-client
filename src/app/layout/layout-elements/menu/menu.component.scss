@@ -1,0 +1,17 @@
+@import "../../../../styles/imports";
+img#logo {
+  width: 165px;
+}
+
+#version {
+  position: absolute;
+}
+
+mat-nav-list {
+  .mat-list-item.mat-list-item-focus.selected,
+  .mat-list-item.selected,
+  .mat-list-item:focus {
+    background-color: $primary-color !important;
+    color: white;
+  }
+}

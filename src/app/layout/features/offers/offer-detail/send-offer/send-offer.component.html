@@ -1,0 +1,37 @@
+<form novalidate #authoritieForm="ngForm" autocomplete="off" [formGroup]="model.group" class="position-relative">
+	<div class="row mt-2">
+		<div class="col">
+			<mat-form-field class="w-100">
+				<input matInput [placeholder]="'Offers.SendOffer.RecipientsPlaceholder' | translate" [formControl]="model.recipients"
+				 type="text" />
+				<mat-error>
+					<ccd-validation-displayer [control]="model.recipients"></ccd-validation-displayer>
+				</mat-error>
+			</mat-form-field>
+		</div>
+	</div>
+
+	<div class="row mt-2">
+		<div class="col">
+			<mat-form-field class="w-100">
+				<textarea matInput [placeholder]="'Offers.SendOffer.MessagePlaceholder' | translate" [formControl]="model.message"></textarea>
+				<mat-error>
+					<ccd-validation-displayer [control]="model.message"></ccd-validation-displayer>
+				</mat-error>
+			</mat-form-field>
+		</div>
+	</div>
+
+	<div class="row mt-4">
+		<div class="col-auto">
+			<button mat-raised-button color="primary" [disabled]="operationInProgress" (click)="onSendOffer()">{{'Concepts.Send' | translate}}</button>
+		</div>
+		<div class="col-auto">
+			<button mat-button color="accent" [disabled]="operationInProgress" mat-dialog-close>{{'Concepts.Cancel' | translate}}</button>
+		</div>
+	</div>
+
+	<div *ngIf="operationInProgress" class="position-absolute spinner-wrapper">
+		<mat-spinner></mat-spinner>
+	</div>
+</form>

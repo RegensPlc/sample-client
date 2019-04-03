@@ -1,0 +1,64 @@
+@import "imports";
+
+$logo-size: 300px;
+
+.logo {
+
+	// this way asset gets processed by webpack 
+	background: url("../assets/logo.png") center center no-repeat;
+	background-size: $logo-size - 50px;
+	height: $logo-size;
+	width: $logo-size;
+}
+
+.app-loading {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: center;
+	overflow: hidden;
+	position: relative;
+}
+
+.app-loading .spinner {
+	animation: rotate 2s linear infinite;
+	bottom: 0;
+	height: 350px;
+	left: 0;
+	margin: auto;
+	position: absolute;
+	right: 0;
+	top: 0;
+	transform-origin: center center;
+	width: 350px;
+}
+
+.app-loading .spinner .path {
+	animation: dash 1.5s ease-in-out infinite;
+	stroke: $primary-color;
+	stroke-dasharray: 1, 200;
+	stroke-dashoffset: 0;
+	stroke-linecap: round;
+}
+@keyframes rotate {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+@keyframes dash {
+	0% {
+		stroke-dasharray: 1, 200;
+		stroke-dashoffset: 0;
+	}
+
+	100% {
+		stroke-dasharray: 89, 200;
+		stroke-dashoffset: -124px;
+	}
+
+	50% {
+		stroke-dasharray: 89, 200;
+		stroke-dashoffset: -35px;
+	}
+}

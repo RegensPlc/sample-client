@@ -1,0 +1,17 @@
+<section [class]="'notification notification-' + getCssClass()">
+	<div class="row flex-nowrap">
+		<div class="col">
+			<div *ngIf="data.title" class="notification-title mb-3">
+				{{data.title}}
+			</div>
+			<div>
+				{{data.message}}
+			</div>
+		</div>
+		<div class="col-auto">
+			<button mat-icon-button class="close-button" (click)="onClose()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+	</div>
+</section>

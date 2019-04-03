@@ -1,0 +1,225 @@
+<form [formGroup]="model.group">
+    <div class="mt-2 row">
+        <div class="col-12 col-lg">
+            <mat-form-field class="w-100">
+                <input #partnerInput matInput [placeholder]="'Offers.Detail.PartnerPlaceholder' | translate" [matAutocomplete]="autoPartner" [formControl]="model.partner">
+                <mat-autocomplete #autoPartner="matAutocomplete" [displayWith]="nameIdDisplayerFn" (optionSelected)="handlePartnerSelect($event)">
+                    <mat-option *ngFor="let partner of partners$ | async" [value]="partner">
+                        <div>{{nameIdDisplayerFn(partner)}}</div>
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error>
+                    <ccd-validation-displayer [control]="model.partner"></ccd-validation-displayer>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-lg">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <input matInput [placeholder]="'Offers.Detail.DatePlaceholder' | translate" [formControl]="model.date" [matDatepicker]="dateDatePicker" autocomplete="off" />
+                        <mat-datepicker-toggle matSuffix [for]="dateDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #dateDatePicker></mat-datepicker>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="model.date"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <mat-select [placeholder]="'Offers.Detail.StatusPlaceholder' | translate" [formControl]="model.status" autocomplete="off">
+                            <mat-option *ngFor="let status of offerStates" [value]="status">
+                                {{status.displayName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="model.status"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <mat-select [placeholder]="'Offers.Detail.TypePlaceholder' | translate" [formControl]="model.type" autocomplete="off">
+                            <mat-option *ngFor="let type of offerTypes" [value]="type">
+                                {{type.displayName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="model.type"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-2 row">
+        <div class="col-12 col-lg">
+            <mat-form-field class="w-100">
+                <mat-select [placeholder]="'Offers.Detail.PartnerAdministratorPlaceholder' | translate" [formControl]="model.partnerAdministrator">
+                    <mat-option *ngFor="let partnerAdministrator of partnerAdministrators" [value]="partnerAdministrator">
+                        <div>{{partnerAdministrator.displayName}}</div>
+                    </mat-option>
+                </mat-select>
+                <mat-error>
+                    <ccd-validation-displayer [control]="model.coworker"></ccd-validation-displayer>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-lg">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <input matInput [placeholder]="'Offers.Detail.StartOfValidityPlaceholder' | translate" [formControl]="model.startOfValidity" [matDatepicker]="startOfValidityDatePicker" autocomplete="off" [max]="model.endOfValidity.value" />
+                        <mat-datepicker-toggle matSuffix [for]="startOfValidityDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startOfValidityDatePicker></mat-datepicker>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="model.startOfValidity"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <input matInput [placeholder]="'Offers.Detail.EndOfValidityPlaceholder' | translate" [formControl]="model.endOfValidity" [matDatepicker]="endOfValidityDatePicker" autocomplete="off" [min]="model.startOfValidity.value" />
+                        <mat-datepicker-toggle matSuffix [for]="endOfValidityDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endOfValidityDatePicker></mat-datepicker>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="model.endOfValidity"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-2 row">
+        <div class="col-12 col-lg">
+            <mat-form-field class="w-100">
+                <mat-select [placeholder]="'Offers.Detail.CoworkerPlaceholder' | translate" [formControl]="model.coworker">
+                    <mat-option *ngFor="let coworker of coworkers" [value]="coworker.userCode">
+                        <div>{{coworker.displayName}}</div>
+                    </mat-option>
+                </mat-select>
+                <mat-error>
+                    <ccd-validation-displayer [control]="model.coworker"></ccd-validation-displayer>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-lg">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <mat-select [placeholder]="'Offers.Detail.ResultPlaceholder' | translate" [formControl]="model.result" autocomplete="off">
+                            <mat-option *ngFor="let result of offerResults" [value]="result">
+                                {{result.displayName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="model.result"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <input matInput [placeholder]="'Offers.Detail.ResultCommentPlaceholder' | translate" [formControl]="model.resultComment">
+                    </mat-form-field>
+                    <mat-error>
+                        <ccd-validation-displayer [control]="model.resultComment"></ccd-validation-displayer>
+                    </mat-error>
+                </div>
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <mat-select [placeholder]="'Offers.Detail.LanguagePlaceholder' | translate" [formControl]="model.languageCode" autocomplete="off">
+                            <mat-option *ngFor="let language of offerLanguages" [value]="language.code">
+                                {{language.displayName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="model.languageCode"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-2 row">
+        <div class="col-12 col-lg">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <input matInput [placeholder]="'Offers.Detail.ParityCodePlaceholder' | translate" [formControl]="model.parityCode">
+                    </mat-form-field>
+                    <mat-error>
+                        <ccd-validation-displayer [control]="model.parityCode"></ccd-validation-displayer>
+                    </mat-error>
+                </div>
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <input matInput [placeholder]="'Offers.Detail.ParityCommentPlaceholder' | translate" [formControl]="model.parityComment">
+                    </mat-form-field>
+                    <mat-error>
+                        <ccd-validation-displayer [control]="model.parityComment"></ccd-validation-displayer>
+                    </mat-error>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <mat-select [placeholder]="'Offers.Detail.PaymentMethodPlaceholder' | translate" [formControl]="model.paymentMethod" autocomplete="off">
+                            <mat-option *ngFor="let paymentType of paymentTypes" [value]="paymentType">
+                                {{paymentType.displayName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="model.paymentMethod"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <mat-select [placeholder]="'Offers.Detail.PaymentCurrencyPlaceholder' | translate" [formControl]="model.paymentCurrency" autocomplete="off">
+                            <mat-option *ngFor="let paymentCurrency of paymentCurrencies" [value]="paymentCurrency">
+                                {{paymentCurrency.displayName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="model.paymentCurrency"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field class="w-100">
+                        <input matInput [placeholder]="'Offers.Detail.PaymentDaysPlaceholder' | translate" [formControl]="model.paymentDays">
+                    </mat-form-field>
+                    <mat-error>
+                        <ccd-validation-displayer [control]="model.paymentDays"></ccd-validation-displayer>
+                    </mat-error>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-2 row">
+        <div class="col-12 col-lg">
+            <mat-form-field class="w-100">
+                <textarea matInput [placeholder]="'Offers.Detail.CommentPlaceholder' | translate" [formControl]="model.comment"></textarea>
+                <mat-error>
+                    <ccd-validation-displayer [control]="model.comment"></ccd-validation-displayer>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <ccd-actions class="mt-4" *ngIf="isReadonly !== null">
+        <button (click)="handleSave()" *ngIf="!isReadonly" [disabled]="cannotSave || operationInProgress" mat-raised-button color="primary">{{'Concepts.Save' | translate}}</button>
+        <button (click)="storno()" *ngIf="!isReadonly" [disabled]="operationInProgress || !offerId" mat-raised-button class="ml-3">{{'Offers.Detail.Storno' | translate}}</button>
+        <button (click)="duplicate(true)" *ngIf="!isReadonly" [disabled]="operationInProgress || !offerId" mat-raised-button class="ml-3">{{'Offers.Detail.Duplicate' | translate}}</button>
+        <button (click)="duplicate(false)" *ngIf="!isReadonly" [disabled]="operationInProgress || !offerId" mat-raised-button class="ml-3">{{'Offers.Detail.DuplicateWithoutItems' | translate}}</button>
+        <button (click)="handleDownloadPdfPreview()" *ngIf="!isReadonly" [disabled]="operationInProgress || !offerId" class="ml-2 btn" mat-raised-button>{{'Offers.Detail.PreviewOfferPdf' | translate}}</button>
+        <button (click)="openSendOfferPopup()" *ngIf="!isReadonly" [disabled]="operationInProgress || !offerId" mat-raised-button class="ml-3">
+			{{'Offers.Detail.SendOffer' | translate}}
+		</button>
+    </ccd-actions>
+</form>

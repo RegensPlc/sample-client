@@ -1,0 +1,7 @@
+@import '~@angular/material/theming';
+@include mat-core();
+$ccd-theme-primary: mat-palette($mat-green);
+$ccd-theme-accent: mat-palette($mat-yellow);
+$ccd-theme-warn: mat-palette($mat-deep-orange, A200);
+$ccd-theme: mat-light-theme($ccd-theme-primary, $ccd-theme-accent, $ccd-theme-warn);
+@include angular-material-theme($ccd-theme);

@@ -1,0 +1,50 @@
+@import "../../../styles/imports.scss";
+
+.base-hours,
+.datepicker {
+  max-width: 140px;
+  min-width: 140px;
+}
+
+.cost-value {
+  max-width: 160px;
+  min-width: 160px;
+}
+
+.cost-name {
+  flex: 0 0 30%;
+}
+
+.cost-type {
+  max-width: 250px;
+  min-width: 250px;
+}
+
+.cost-comment {
+  max-width: 350px;
+  min-width: 350px;
+}
+
+.row {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+  &:first-child {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  &:nth-child(even) {
+    background-color: #ffffff;
+
+    &.new-cost {
+      background-color: $highlight-color;
+    }
+  }
+}
+
+.cost-spacer {
+  flex: 1 0 auto;
+}
+
+.new-cost {
+  background-color: $highlight-color;
+}

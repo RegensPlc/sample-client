@@ -1,0 +1,15 @@
+<mat-toolbar class="bg-white">
+    <img id="logo" src="assets/logo.png" alt="image">
+</mat-toolbar>
+<mat-nav-list class="pt-0">
+    <a mat-list-item [routerLink]="navigationService.features().offers().getOfferListUrl()" routerLinkActive="selected">
+		{{'App.Breadcrumbs.Offers.OfferHandling' | translate}}
+	</a>
+    <a mat-list-item [routerLink]="navigationService.features().operations().getOperationListUrl()" routerLinkActive="selected">
+		{{'App.Breadcrumbs.Operations.OperationHandling' | translate}}
+	</a>
+    <a mat-list-item [routerLink]="navigationService.features().costs().getCostDiaryUrl()" routerLinkActive="selected">
+		{{'App.Breadcrumbs.Costs.CostHandling' | translate}}
+	</a>
+</mat-nav-list>
+<div id="version" class="text-center font-italic small fixed-bottom mb-2">{{version}}</div>

@@ -1,0 +1,107 @@
+<mat-card [formGroup]="model.group">
+    <mat-card-content>
+        <h4 class="mb-4">{{'Operations.Detail.Documents.Title' | translate}}</h4>
+        <section class="mb-4">
+            <div *ngFor="let doc of existingDocuments" class="row document align-items-center">
+                <div class="col">
+                    <div class="row align-items-center">
+                        <div class="col-12 col-lg-3">
+                            <button mat-button color="primary" (click)="handleDownload(doc)" [matTooltip]="doc.fullPath">{{doc.fileName}}</button>
+                        </div>
+                        <div class="col-12 col-lg-2">
+                            {{doc.taskType}}
+                        </div>
+                        <div class="col-12 col-lg-2">
+                            {{doc.type}}
+                        </div>
+                        <div class="col-12 col-lg-5">
+                            {{doc.description}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button mat-icon-button color="primary" (click)="handleDocumentDelete(doc)">
+						<mat-icon>close</mat-icon>
+					</button>
+                </div>
+            </div>
+        </section>
+
+        <section formArrayName="documents">
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <button mat-raised-button (click)="handleNewDocument()">
+						<mat-icon>add</mat-icon>
+						{{'Operations.Detail.Documents.New' | translate}}
+					</button>
+                </div>
+            </div>
+
+            <div class="row document" *ngFor="let document of model.getGroupsInsideDocumentsArray(); let i=index" [formGroupName]="i">
+                <div class="col-12 col-lg-2">
+                    <mat-form-field class="w-100">
+                        <div>
+                            <button mat-raised-button (click)="file.click()" class="w-100">{{'Operations.Detail.Documents.SelectFileButtonValue' | translate}}</button>
+                            <input hidden type="file" multiple="multiple" #file (change)="onFileSelect($event, document)" />
+                            <mat-progress-bar #fileProgress mode="determinate" [value]="document.controls['uploadPercent'].value"></mat-progress-bar>
+                        </div>
+                        <input matInput class="d-none" [formControl]="document.controls['fileId']" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="document.controls['fileId']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-lg-2">
+                    <mat-form-field class="w-100">
+                        <input matInput [placeholder]="'Operations.Detail.Documents.FileName_PlaceHolder' | translate" [formControl]="document.controls['fileName']" autocomplete="off" />
+                        <mat-error>
+                            <ccd-validation-displayer [control]="document.controls['fileName']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-lg-1">
+                    <mat-form-field class="w-100">
+                        <mat-select [placeholder]="'Operations.Detail.Documents.ProgramCode_PlaceHolder' | translate" [formControl]="document.controls['taskType']">
+                            <mat-option *ngFor="let tasktype of taskTypes" [value]="tasktype.code">
+                                <div>{{tasktype.displayName}}</div>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="document.controls['taskType']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-lg-2">
+                    <mat-form-field class="w-100">
+                        <mat-select [placeholder]="'Operations.Detail.Documents.DocumentType_PlaceHolder' | translate" [formControl]="document.controls['type']">
+                            <mat-option *ngFor="let type of documentTypes" [value]="type.code">
+                                <div>{{type.displayName}}</div>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="document.controls['type']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <mat-form-field class="w-100">
+                        <textarea matInput [placeholder]="'Operations.Detail.Documents.Descrption_PlaceHolder' | translate" [formControl]="document.controls['description']" autocomplete="off"></textarea>
+                        <mat-error>
+                            <ccd-validation-displayer [control]="document.controls['description']"></ccd-validation-displayer>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-lg-1 align-self-center">
+                    <button mat-icon-button color="primary" (click)="handleNewDocumentDelete(i)">
+						<mat-icon>close</mat-icon>
+					</button>
+                </div>
+            </div>
+        </section>
+
+    </mat-card-content>
+</mat-card>
+
+<ccd-actions class="mt-4">
+    <button (click)="handleSave()" [disabled]="!canSave || operationInProgress" mat-raised-button color="primary">{{'Concepts.Save' | translate}}</button>
+</ccd-actions>
